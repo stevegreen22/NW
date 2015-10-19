@@ -1,0 +1,40 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+             version="2.0">
+    <persistence-unit name="entityManager">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <!-- Annotated entity classes -->
+        <class>com.nakedwines.model.Appointment</class>
+        <properties>
+
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL82Dialect" />
+            <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
+            <property name="hibernate.connection.username" value="myapp"/>
+            <property name="hibernate.connection.password" value="dbpass"/>
+            <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:15432/myapp"/>
+            <property name="connection_pool_size" value="1"/>
+
+            <!--persist data and schema-->
+            <property name="hbm2ddl.auto" value="update"/>
+
+            <!--display squirrels in console.-->
+            <property name="show_sql" value="true"/>
+
+            <!--Env variable for application development:-->
+            <!--==> default:   DATABASE_URL=postgresql://myapp:dbpass@localhost:15432/myapp-->
+
+        </properties>
+    </persistence-unit>
+</persistence>
+
+
+        <!--myapp=> create table appointments(-->
+        <!--myapp(> appId serial primary key,-->
+        <!--myapp(> title varchar(60),-->
+        <!--myapp(> description varchar(200),-->
+        <!--myapp(> theDate Date,-->
+        <!--myapp(> startTime Time,-->
+        <!--myapp(> endTime Time,-->
+        <!--myapp(> appointmentType varchar(20)-->
+        <!--myapp(> );-->

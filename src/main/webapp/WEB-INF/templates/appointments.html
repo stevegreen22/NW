@@ -1,0 +1,170 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>Naked Java Appointments</title>
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/jquery-ui.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/timePicker.css}"/>
+
+
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h4>Appointments</h4>
+            <div class="panel panel-default">
+                <table class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Date</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Type</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr th:each="items : ${appList}" >
+                        <!--store the objects as a variables to format-->
+                        <div th:with="prettyDate=${items.getTheDate()},
+                                      prettyStartTime=${items.getStartTime()},
+                                      prettyEndTime=${items.getEndTime()}" >
+
+                        <td th:text="${items.getTitle()}"></td>
+                        <td th:text="${items.getDescription()}"></td>
+
+                        <td th:text="${#dates.format(prettyDate, #messages.msg('date.format'))}"></td>
+                        <td th:text="${#dates.format(prettyStartTime, #messages.msg('time.format'))}"></td>
+                        <td th:text="${#dates.format(prettyEndTime, #messages.msg('time.format'))}"></td>
+
+                        <td th:text="${{items.getAppointmentType()}}"></td>
+                        </div>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <h4>Create appointment</h4>
+            <div class="panel panel-default">
+                <div class="panel-body">
+
+                    <form action="#" th:action="@{/appointments/create}" th:object="${createApp}" method="post">
+
+                        <fieldset>
+                            <label for="title" th:text="#{form.appointments.title}"></label>
+                            <input id="title" type="text" th:field="*{title}" th:title="#{form.error.title}" placeholder="Short title" required="required" autofocus="autofocus"/>
+                            <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
+
+                            <label for="description" th:text="#{form.appointments.description}"></label>
+                            <input id="description" type="text" th:field="*{description}" placeholder="Description of the event" required="required" th:title="#{form.error.description}"/>
+                            <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
+
+                            <label for="theDate" th:text="#{form.appointments.theDate}"></label>
+                            <input id="theDate" type="text" th:field="*{theDate}" placeholder="10/07/2015" required="required" th:title="#{form.error.theDate}"/>
+                            <p th:if="${#fields.hasErrors('theDate')}" th:errors="*{theDate}"></p>
+
+                            <!--//Need to give an option of all day-->
+                            <label for="startTime" th:text="#{form.appointments.startTime}"></label>
+                            <input id="startTime" type="text" th:field="*{startTime}" placeholder="10:00" required="required"  th:title="#{form.error.startTime}"/>
+                            <p th:if="${#fields.hasErrors('startTime')}" th:errors="*{startTime}"></p>
+
+                            <label for="endTime" th:text="#{form.appointments.duration}"></label>
+                            <input id="endTime" type="text" th:field="*{duration}" placeholder="30"  th:title="#{form.error.duration}"/>
+                            <p th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}"></p>
+
+                            <label for="appointmentType" th:text="#{form.appointments.appointmentType}"></label>
+                            <p th:if="${#fields.hasErrors('appointmentType')}" th:errors="*{appointmentType}"></p>
+                            <!--<select id="appointmentType">-->
+                                <!--<option required="required" th:each="appointmentType : ${T(Appointment.AppointmentType).values()}" th:value="${appointmentType}" th:text="${appointmentType.displayName}"></option>-->
+                            <!--</select>-->
+
+                            <select name="appointmentType" id="appointmentType">
+                                <option th:each="appointmentType : ${T(com.nakedwines.model.AppointmentType).values()}" th:value="${appointmentType}" th:text="#{__${appointmentType.displayName}__}" th:selected="${appointmentType == T(com.nakedwines.model.AppointmentType).WORK}"></option>
+                            </select>
+
+
+                            <button type="submit" name="save" class="btn btn-primary" th:text="#{form.button.appointments.save}"></button>
+                        </fieldset>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<script src="/assets/JS/jquery-1.10.2.js"></script>
+<script src="/assets/JS/jquery-ui.js"></script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.4.5/i18n/jquery-ui-timepicker-addon-i18n.min.js"></script>-->
+<script src="/assets/JS/timePicker.js"></script>
+<script>
+    //<![CDATA[
+    $(document).ready(function() {
+        $( "#theDate" ).datepicker({
+            minDate: -0,
+            showWeek: true,
+            firstDay: 1,
+            showOn: "both",
+            buttonImage: "/assets/img/calendar.gif",
+            buttonImageOnly: true,
+            buttonText: "Select date",
+            showButtonPanel: true,
+            dateFormat: "dd/mm/yy " //crazy lib uses mm instead of MM for month
+
+        });
+        //Time pickers
+        $('#startTime').timepicker({
+            controlType: 'select',
+            oneLine: true,
+            timeFormat: 'hh:mm tt'
+
+        });
+
+    });
+
+    $.timepicker._gotoToday = _.wrap($.timepicker._gotoToday, function (originalHandler) {
+        originalHandler.apply(this, _.rest(arguments));
+        //utc adjustment:
+        var date = new Date();
+        date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
+        element.timepicker('setDate', date);
+    });
+
+
+    $.datepicker._gotoToday = function(id) {
+        var target = $(id);
+        var inst = this._getInst(target[0]);
+        if (this._get(inst, 'gotoCurrent') && inst.currentDay) {
+            inst.selectedDay = inst.currentDay;
+            inst.drawMonth = inst.selectedMonth = inst.currentMonth;
+            inst.drawYear = inst.selectedYear = inst.currentYear;
+        }
+        else {
+            var date = new Date();
+            inst.selectedDay = date.getDate();
+            inst.drawMonth = inst.selectedMonth = date.getMonth();
+            inst.drawYear = inst.selectedYear = date.getFullYear();
+            // the below two lines are new
+            this._setDateDatepicker(target, date);
+            this._selectDate(id, this._getDateDatepicker(target));
+        }
+        this._notifyChange(inst);
+        this._adjustDate(target);
+    };
+
+
+
+
+    //]]>
+</script>
+</html>

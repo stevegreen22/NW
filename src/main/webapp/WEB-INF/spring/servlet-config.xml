@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/mvc
+                    http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd
+                    http://www.springframework.org/schema/tx
+                    http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
+                    http://www.springframework.org/schema/beans
+                    http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+                    http://www.springframework.org/schema/context
+                    http://www.springframework.org/schema/context/spring-context-4.1.xsd
+                    http://www.springframework.org/schema/task
+                    http://www.springframework.org/schema/task/spring-task.xsd">
+
+    <mvc:default-servlet-handler/>
+    <mvc:annotation-driven/>
+
+    <!-- Add JPA support -->
+    <bean id="emf" class=
+            "org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="loadTimeWeaver">
+            <bean class="org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver"/>
+        </property>
+    </bean>
+
+    <!-- Add Transaction support -->
+    <bean id="myTxManager"
+          class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="emf"/>
+    </bean>
+
+    <!-- Use @Transaction annotations for managing transactions -->
+    <tx:annotation-driven transaction-manager="myTxManager" />
+
+
+
+    <!--Allows for static content to easily be served up without needing a controller etc-->
+    <mvc:resources mapping="/images/**" location="assets/img"/>
+    <mvc:resources mapping="/css/" location="assets/css"/>
+    <mvc:resources mapping="/assets/**" location="assets"/>
+
+
+    <!--double asterisk allows for recursive search - load all under the pacakge-->
+    <context:component-scan base-package="com.nakedwines"/>
+
+
+
+    <!--registering an intercepter for the language - the paramname is 'language' from the href in the jsp page.-->
+    <mvc:interceptors>
+        <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" p:paramName="language"/>
+    </mvc:interceptors>
+
+    <!--locale resolver bean used by spring to know which current selected local we have- default is english -->
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver" p:defaultLocale="en"></bean>
+
+    <!--create a bean for the message source - will be referenced by the tablig spring:messaage tag - basename is the name of the .properties file-->
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource" p:basename="messages"></bean>
+
+    <!--validation-->
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
+    <bean id="appointmentValidator" class="com.nakedwines.validator.AppointmentValidator" />
+
+    <bean class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="0"/>
+
+    <!--formatting-->
+    <!-- **************************************************************** -->
+    <!--  CONVERSION SERVICE                                              -->
+    <!--  Standard Spring formatting-enabled implementation               -->
+    <!-- **************************************************************** -->
+    <!--<bean id="conversionService"-->
+          <!--class="org.springframework.format.support.FormattingConversionServiceFactoryBean">-->
+        <!--<property name="formatters">-->
+            <!--<set>-->
+                <!--<bean class="com.nakedwines.formatter.DateFormatter" />-->
+            <!--</set>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+    <bean id="dateFormat" class="java.text.SimpleDateFormat">
+        <constructor-arg value="dd/MM/yyyy" />
+    </bean>
+
+    <bean id="timeFormat" class="java.text.SimpleDateFormat">
+        <constructor-arg value="HH:mm" />
+    </bean>
+
+
+    <bean id="appointment" class="com.nakedwines.model.Appointment">
+        <property name="theDate">
+            <bean factory-bean="dateFormat" factory-method="parse">
+                <constructor-arg value="22/05/1983" />
+            </bean>
+        </property>
+        <property name="startTime">
+            <bean factory-bean="timeFormat" factory-method="parse">
+                <constructor-arg value="10:00" />
+            </bean>
+        </property>
+        <property name="endTime">
+            <bean factory-bean="timeFormat" factory-method="parse">
+                <constructor-arg value="10:00" />
+            </bean>
+        </property>
+    </bean>
+
+
+    <!--old jsp view resolver-->
+    <!--this si the internal resouce view resolver-->
+    <!--<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"-->
+    <!--p:prefix="/WEB-INF/jsp/"-->
+    <!--p:suffix=".jsp" p:order="1">-->
+        <!---->
+    <!--</bean>-->
+    <!--&lt;!&ndash; View resolver &ndash;&gt;-->
+    <!--<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
+        <!--<property name="prefix" value="/WEB-INF/"/>-->
+    <!--</bean>-->
+
+
+    <!--taken from the thymeleaf site-->
+    <bean id="templateResolver"
+          class="org.thymeleaf.templateresolver.ServletContextTemplateResolver">
+        <property name="prefix" value="/WEB-INF/templates/" />
+        <property name="suffix" value=".html" />
+        <property name="templateMode" value="HTML5" />
+    </bean>
+
+    <bean id="templateEngine"
+          class="org.thymeleaf.spring4.SpringTemplateEngine">
+        <property name="templateResolver" ref="templateResolver" />
+    </bean>
+
+    <bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
+        <property name="templateEngine" ref="templateEngine" />
+    </bean>
+
+
+</beans>
