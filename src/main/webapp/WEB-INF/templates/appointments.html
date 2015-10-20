@@ -2,6 +2,7 @@
 <head>
     <meta charset="utf-8"/>
     <title>Naked Java Appointments</title>
+    <link rel="stylesheet" th:href="@{/assets/css/app.css}" />
     <link rel="stylesheet" th:href="@{/assets/css/bootstrap.css}" />
     <link rel="stylesheet" th:href="@{/assets/css/jquery-ui.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/timePicker.css}"/>
@@ -69,27 +70,32 @@
                         <fieldset>
                             <label for="title" th:text="#{form.appointments.title}"></label>
                             <input id="title" type="text" th:field="*{title}" th:title="#{form.error.title}" placeholder="Short title" required="required" autofocus="autofocus"/>
-                            <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
+                            <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" th:errorclass="formError"></p>
 
                             <label for="description" th:text="#{form.appointments.description}"></label>
                             <input id="description" type="text" th:field="*{description}" placeholder="Description of the event" required="required" th:title="#{form.error.description}"/>
-                            <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
+                            <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" th:errorclass="formError"></p>
 
                             <label for="theDate" th:text="#{form.appointments.theDate}"></label>
                             <input id="theDate" type="text" th:field="*{theDate}" placeholder="10/07/2015" required="required" th:title="#{form.error.theDate}"/>
-                            <p th:if="${#fields.hasErrors('theDate')}" th:errors="*{theDate}"></p>
+                            <p th:if="${#fields.hasErrors('theDate')}" th:errors="*{theDate}" th:errorclass="formError"></p>
 
                             <!--//Need to give an option of all day-->
                             <label for="startTime" th:text="#{form.appointments.startTime}"></label>
                             <input id="startTime" type="text" th:field="*{startTime}" placeholder="10:00" required="required"  th:title="#{form.error.startTime}"/>
-                            <p th:if="${#fields.hasErrors('startTime')}" th:errors="*{startTime}"></p>
+                            <p th:if="${#fields.hasErrors('startTime')}" th:errors="*{startTime}" th:errorclass="formError"></p>
 
                             <label for="endTime" th:text="#{form.appointments.duration}"></label>
                             <input id="endTime" type="text" th:field="*{duration}" placeholder="30"  th:title="#{form.error.duration}"/>
-                            <p th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}"></p>
+                            <p th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}" th:errorclass="formError"></p>
+
+                            <!--<select name="appointmentType" id="appointmentType">-->
+                                <!--<option th:each="appointmentType : ${T(com.nakedwines.model.AppointmentType).values()}" th:value="${appointmentType}" th:text="#{__${appointmentType.displayName}__}" th:selected="${appointmentType == T(com.nakedwines.model.AppointmentType).WORK}"></option>-->
+                            <!--</select>-->
+
 
                             <label for="appointmentType" th:text="#{form.appointments.appointmentType}"></label>
-                            <p th:if="${#fields.hasErrors('appointmentType')}" th:errors="*{appointmentType}"></p>
+                            <p th:if="${#fields.hasErrors('appointmentType')}" th:errors="*{appointmentType}" th:errorclass="formError"></p>
                             <!--<select id="appointmentType">-->
                                 <!--<option required="required" th:each="appointmentType : ${T(Appointment.AppointmentType).values()}" th:value="${appointmentType}" th:text="${appointmentType.displayName}"></option>-->
                             <!--</select>-->
