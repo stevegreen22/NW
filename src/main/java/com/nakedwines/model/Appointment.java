@@ -25,7 +25,7 @@ public class Appointment {
     private String title;
     private String description;
 
-    @DateTimeFormat(pattern = "dd/mm/yyyy")// with this we can't convert the date
+    @DateTimeFormat(pattern = "dd/MM/yyyy")// with this we can't convert the date
     private Date theDate;
 
     @DateTimeFormat(pattern = "HH:mm")

@@ -56,9 +56,9 @@ public class AppointmentValidator implements Validator {
         if (theDate == null) {
             errors.rejectValue("theDate", "form.date.empty");
         }
-        if (theDate.compareTo(today) < 0) {
-            errors.rejectValue("theDate", "form.error.dateAfterToday");
-        }
+//        if (theDate.compareTo(today) < 0) {
+//            errors.rejectValue("theDate", "form.error.dateAfterToday");
+//        }
 
 
     }

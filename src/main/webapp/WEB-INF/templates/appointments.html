@@ -29,17 +29,24 @@
                     <tbody>
 
                     <tr th:each="items : ${appList}" >
+
+
                         <!--store the objects as a variables to format-->
                         <div th:with="prettyDate=${items.getTheDate()},
                                       prettyStartTime=${items.getStartTime()},
                                       prettyEndTime=${items.getEndTime()}" >
+
+
 
                         <td th:text="${items.getTitle()}"></td>
                         <td th:text="${items.getDescription()}"></td>
 
                         <td th:text="${#dates.format(prettyDate, #messages.msg('date.format'))}"></td>
                         <td th:text="${#dates.format(prettyStartTime, #messages.msg('time.format'))}"></td>
-                        <td th:text="${#dates.format(prettyEndTime, #messages.msg('time.format'))}"></td>
+
+                        <td th:if="${prettyEndTime != null}" th:text="${#dates.format(prettyEndTime, #messages.msg('time.format'))}"> - </td>
+
+                        <!--<td th:text="${#dates.format(prettyEndTime, #messages.msg('time.format'))}"></td>-->
 
                         <td th:text="${{items.getAppointmentType()}}"></td>
                         </div>

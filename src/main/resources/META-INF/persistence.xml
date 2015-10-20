@@ -38,3 +38,5 @@
         <!--myapp(> endTime Time,-->
         <!--myapp(> appointmentType varchar(20)-->
         <!--myapp(> );-->
+
+        <!--create table appointments(appId serial primary key, title varchar(60),description varchar(200),theDate Date,startTime Time,endTime Time,appointmentType varchar(20));-->
