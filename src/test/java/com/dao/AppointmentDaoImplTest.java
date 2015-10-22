@@ -40,7 +40,7 @@ public class AppointmentDaoImplTest {
 
         appointment.setTitle("A Title");
         appointment.setDescription("A Description");
-        appointment.setAppointmentType(AppointmentType.HOLIDAY);
+        appointment.setAppointmentType(AppointmentType.HOME);
 
         Calendar cal = Calendar.getInstance();//today
         appointment.setTheDate(cal.getTime());
@@ -63,7 +63,7 @@ public class AppointmentDaoImplTest {
         Appointment appointment = new Appointment();
         appointment.setDescription("fy");
         appointment.setDescription("some description");
-        appointment.setAppointmentType(AppointmentType.HOLIDAY);
+        appointment.setAppointmentType(AppointmentType.HOME);
 
 
         appointment.setTheDate(cal.getTime());

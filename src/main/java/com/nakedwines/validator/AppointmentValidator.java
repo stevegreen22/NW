@@ -34,8 +34,17 @@ public class AppointmentValidator implements Validator {
 
         try {
             validateTheDate(appointment.getTheDate(), errors);
+            validateDuration(appointment.getDuration(), errors);
         } catch (ValidationException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void validateDuration(int duration, Errors errors) {
+        if (duration == 0) {
+            errors.rejectValue("duration", "form.duration.errorEmptyOrNull");
+        } else if (duration < 15) {
+            errors.rejectValue("duration", "form.duration.errorTooShort");
         }
     }
 

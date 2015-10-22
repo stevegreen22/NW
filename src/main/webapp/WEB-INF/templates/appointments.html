@@ -6,8 +6,6 @@
     <link rel="stylesheet" th:href="@{/assets/css/bootstrap.css}" />
     <link rel="stylesheet" th:href="@{/assets/css/jquery-ui.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/timePicker.css}"/>
-
-
 </head>
 <body>
 
@@ -31,13 +29,10 @@
 
                     <tr th:each="items : ${appList}" >
 
-
                         <!--store the objects as a variables to format-->
                         <div th:with="prettyDate=${items.getTheDate()},
                                       prettyStartTime=${items.getStartTime()},
                                       prettyEndTime=${items.getEndTime()}" >
-
-
 
                         <td th:text="${items.getTitle()}"></td>
                         <td th:text="${items.getDescription()}"></td>
@@ -46,8 +41,6 @@
                         <td th:text="${#dates.format(prettyStartTime, #messages.msg('time.format'))}"></td>
 
                         <td th:if="${prettyEndTime != null}" th:text="${#dates.format(prettyEndTime, #messages.msg('time.format'))}"> - </td>
-
-                        <!--<td th:text="${#dates.format(prettyEndTime, #messages.msg('time.format'))}"></td>-->
 
                         <td th:text="${{items.getAppointmentType()}}"></td>
                         </div>
@@ -89,19 +82,24 @@
                             <input id="endTime" type="text" th:field="*{duration}" placeholder="30"  th:title="#{form.error.duration}"/>
                             <p th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}" th:errorclass="formError"></p>
 
-                            <!--<select name="appointmentType" id="appointmentType">-->
-                                <!--<option th:each="appointmentType : ${T(com.nakedwines.model.AppointmentType).values()}" th:value="${appointmentType}" th:text="#{__${appointmentType.displayName}__}" th:selected="${appointmentType == T(com.nakedwines.model.AppointmentType).WORK}"></option>-->
+                            <!--using literals instead of messages-->
+                            <!--Todo: update -this is horrid-->
+                            <!--Todo: Calculate the time temainign in the day fo rthe 'all day' option-->
+                            <!--<select name="endTime" id="endTime">-->
+                                <!--<option  th:value="*{180}" th:text="${'All Day'}" th:selected="true"></option>-->
+                                <!--<option  th:value="*{30}" th:text="${'30 mins'}"></option>-->
+                                <!--<option  th:value="*{60}" th:text="${'60 mins'}"></option>-->
+                                <!--<option  th:value="${90}" th:text="${'1hr 30mins'}"></option>-->
+                                <!--<option  th:value="${120}" th:text="${'2hr'}"></option>-->
+                                <!--<option  th:value="${180}" th:text="${'2hr 30mins'}"></option>-->
+                                <!--<option  th:value="${240}" th:text="${'3hr'}"></option>-->
                             <!--</select>-->
-
 
                             <label for="appointmentType" th:text="#{form.appointments.appointmentType}"></label>
                             <p th:if="${#fields.hasErrors('appointmentType')}" th:errors="*{appointmentType}" th:errorclass="formError"></p>
-                            <!--<select id="appointmentType">-->
-                                <!--<option required="required" th:each="appointmentType : ${T(Appointment.AppointmentType).values()}" th:value="${appointmentType}" th:text="${appointmentType.displayName}"></option>-->
-                            <!--</select>-->
 
                             <select name="appointmentType" id="appointmentType">
-                                <option th:each="appointmentType : ${T(com.nakedwines.model.AppointmentType).values()}" th:value="${appointmentType}" th:text="#{__${appointmentType.displayName}__}" th:selected="${appointmentType == T(com.nakedwines.model.AppointmentType).WORK}"></option>
+                                <option th:each="appointmentType : ${T(com.nakedwines.model.AppointmentType).values()}" th:value="${appointmentType}" th:text="#{__${appointmentType.displayName}__}" th:selected="${appointmentType == T(com.nakedwines.model.AppointmentType).MEETING}"></option>
                             </select>
 
 
@@ -139,7 +137,7 @@
         $('#startTime').timepicker({
             controlType: 'select',
             oneLine: true,
-            timeFormat: 'hh:mm tt'
+            timeFormat: 'HH:mm'
 
         });
 

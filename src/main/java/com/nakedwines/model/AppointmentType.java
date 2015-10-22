@@ -6,9 +6,11 @@ package com.nakedwines.model;
 
         //values stored in properties, does require updating both if
         //changes are made but useful for mutliple languages.
-        WORK("AppointmentType.Work"),
-        HOLIDAY("AppointmentType.Holiday"),
-        DENTIST("AppointmentType.Dentist");
+        MEETING("AppointmentType.Meeting"),
+        HOME("AppointmentType.Home"),
+        DENTIST("AppointmentType.Dentist"),
+        XYZ("AppointmentType.XYZ"),
+        ABC("AppointmentType.ABC");
 
         private final String displayName;
 

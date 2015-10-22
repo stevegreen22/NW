@@ -45,17 +45,17 @@ public class AppointmentController {
                                     BindingResult result, Model model){
 
         appointmentValidator.validate(createApp, result);
-        if (result.hasErrors()) {
 
-            //better or easier to call the other controller?
-            model.addAttribute("appList", getAllCurrentAppointments());
-            return "appointments";
-        } else {
+        if (!result.hasErrors()){
             appointmentService.persistAppointment(createApp);
-            //better or easier to call the other controller?
-            model.addAttribute("appList", getAllCurrentAppointments());
-            return "appointments";
         }
+        model.addAttribute("appList", getAllCurrentAppointments());
+        return "appointments";
+
+    }
+
+    @RequestMapping(value = "/appointments/delete", method = RequestMethod.POST)
+    public String deleteAppointment(@ModelAttribute(value = "deleteApp") Model model){
 
     }
 
