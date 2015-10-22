@@ -58,7 +58,7 @@
             <div class="panel panel-default">
                 <div class="panel-body">
 
-                    <form action="#" th:action="@{/appointments.html}" th:object="${appointment}" method="post">
+                    <form action="#" th:action="@{/appointments/create}" th:object="${appointment}" method="post">
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
                         <fieldset>

@@ -18,7 +18,7 @@ import java.util.List;
 * Created by SteveGreen on 16/10/15.
 */
 @Controller
-@RequestMapping("/appointments.html")
+@RequestMapping("appointments")
 @SessionAttributes("appointment")
 public class AppointmentController {
 
@@ -55,7 +55,7 @@ public class AppointmentController {
         } else {
             appointmentService.persistAppointment(appointment);
             status.setComplete();
-            return "redirect:appointments.html";
+            return "redirect:/appointments.html";
         }
 
     }
@@ -65,7 +65,7 @@ public class AppointmentController {
 
         appointmentService.deleteAppointment(appointment);
         status.setComplete();
-        return "redirect:appointments.html";
+        return "redirect:appointments";
     }
 
     @ModelAttribute("appList")
