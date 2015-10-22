@@ -44,6 +44,10 @@
 
                         <td th:text="${{items.getAppointmentType()}}"></td>
                         </div>
+                        <form action="#" th:action="@{/appointments/delete}" th:object="${appointment}" method="post">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            <button type="submit" name="delete" class="btn btn-primary" th:text="#{form.button.appointments.delete}"></button>
+                        </form>
                     </tr>
 
                     </tbody>

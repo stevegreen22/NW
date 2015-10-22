@@ -65,7 +65,7 @@ public class AppointmentController {
 
         appointmentService.deleteAppointment(appointment);
         status.setComplete();
-        return "redirect:appointments";
+        return "redirect:/appointments.html";
     }
 
     @ModelAttribute("appList")
