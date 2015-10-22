@@ -49,4 +49,9 @@ public class AppointmentServiceImpl implements AppointmentService {
     public List<Appointment> getAppointmentlist() {
         return appointmentDao.getAppointmentlist();
     }
+
+    @Override
+    public Appointment getAppointmentById(Integer appId) {
+        return null;
+    }
 }

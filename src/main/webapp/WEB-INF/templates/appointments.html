@@ -58,7 +58,8 @@
             <div class="panel panel-default">
                 <div class="panel-body">
 
-                    <form action="#" th:action="@{/appointments/create}" th:object="${createApp}" method="post">
+                    <form action="#" th:action="@{/appointments.html}" th:object="${appointment}" method="post">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
                         <fieldset>
                             <label for="title" th:text="#{form.appointments.title}"></label>
@@ -102,8 +103,7 @@
                                 <option th:each="appointmentType : ${T(com.nakedwines.model.AppointmentType).values()}" th:value="${appointmentType}" th:text="#{__${appointmentType.displayName}__}" th:selected="${appointmentType == T(com.nakedwines.model.AppointmentType).MEETING}"></option>
                             </select>
 
-
-                            <button type="submit" name="save" class="btn btn-primary" th:text="#{form.button.appointments.save}"></button>
+                            <button type="submit" name="create" class="btn btn-primary" th:text="#{form.button.appointments.save}"></button>
                         </fieldset>
                     </form>
 

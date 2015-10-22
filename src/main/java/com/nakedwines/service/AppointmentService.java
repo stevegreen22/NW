@@ -13,4 +13,5 @@ public interface AppointmentService {
     void updateAppointment(Appointment appointment);
     void deleteAppointment(Appointment appointment);
     List<Appointment> getAppointmentlist();
+    Appointment getAppointmentById(Integer appId);
 }

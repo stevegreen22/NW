@@ -35,10 +35,10 @@
     </servlet-mapping>
 
     <welcome-file-list>
-        <welcome-file>welcomeSplash.jsp</welcome-file>
+        <welcome-file>appointments.html</welcome-file>
     </welcome-file-list>
 
-    <display-name>RatedPlate Web Application</display-name>
+    <display-name>Appointments Web Application</display-name>
 
     <servlet-mapping>
         <servlet-name>AppointmentsNW</servlet-name>
