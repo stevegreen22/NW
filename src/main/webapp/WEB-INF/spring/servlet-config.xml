@@ -114,6 +114,8 @@
         <property name="prefix" value="/WEB-INF/templates/" />
         <property name="suffix" value=".html" />
         <property name="templateMode" value="HTML5" />
+        <!--added for intellij hotswap-->
+        <property name="cacheable" value="false" />
     </bean>
 
     <bean id="templateEngine"

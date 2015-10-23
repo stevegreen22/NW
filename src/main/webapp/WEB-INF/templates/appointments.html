@@ -82,7 +82,7 @@
 
                             <!--//Need to give an option of all day-->
                             <label for="startTime" th:text="#{form.appointments.startTime}"></label>
-                            <input id="startTime" type="number" th:field="*{startTime}" placeholder="10:00" required="required"  th:title="#{form.error.startTime}"/>
+                            <input id="startTime" type="text" th:field="*{startTime}" placeholder="10:00" required="required"  th:title="#{form.error.startTime}"/>
                             <p th:if="${#fields.hasErrors('startTime')}" th:errors="*{startTime}" th:errorclass="formError"></p>
 
                             <label for="endTime" th:text="#{form.appointments.duration}"></label>
