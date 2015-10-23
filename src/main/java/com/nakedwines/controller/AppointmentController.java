@@ -25,7 +25,6 @@ public class AppointmentController {
     @Autowired AppointmentService appointmentService;
     @Autowired AppointmentValidator appointmentValidator;
 
-
     //Form backing object
     @RequestMapping(method = RequestMethod.GET)
     public Appointment setUpForm(@RequestParam(value="appId", required = false) Integer appId) {
@@ -37,7 +36,6 @@ public class AppointmentController {
         }
     }
 
-
     @RequestMapping(value = "create", method = RequestMethod.POST)
     public String createAppointment(Appointment appointment,
                                     BindingResult result, SessionStatus status) {
@@ -45,6 +43,13 @@ public class AppointmentController {
         return update(appointment, result, status);
     }
 
+    @RequestMapping(value = "delete", method = RequestMethod.POST)
+    public String deleteAppointment(@RequestParam Appointment appointment) {//}, BindingResult result, SessionStatus status) {
+
+        appointmentService.deleteAppointment(appointment);
+       // status.setComplete();
+        return "appointments";
+    }
 
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public String update(Appointment appointment, BindingResult result, SessionStatus status) {
@@ -57,15 +62,6 @@ public class AppointmentController {
             status.setComplete();
             return "redirect:/appointments.html";
         }
-
-    }
-
-    @RequestMapping(value = "delete", method = RequestMethod.POST)
-    public String deleteAppointment(Appointment appointment, BindingResult result, SessionStatus status) {
-
-        appointmentService.deleteAppointment(appointment);
-        status.setComplete();
-        return "redirect:/appointments.html";
     }
 
     @ModelAttribute("appList")

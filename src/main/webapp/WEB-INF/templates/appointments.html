@@ -27,27 +27,29 @@
                     </thead>
                     <tbody>
 
-                    <tr th:each="items : ${appList}" >
+                    <tr th:each="appointment : ${appList}" >
 
                         <!--store the objects as a variables to format-->
-                        <div th:with="prettyDate=${items.getTheDate()},
-                                      prettyStartTime=${items.getStartTime()},
-                                      prettyEndTime=${items.getEndTime()}" >
+                        <div th:with="prettyDate=${appointment.getTheDate()},
+                                      prettyStartTime=${appointment.getStartTime()},
+                                      prettyEndTime=${appointment.getEndTime()}" >
 
-                        <td th:text="${items.getTitle()}"></td>
-                        <td th:text="${items.getDescription()}"></td>
+                        <td th:text="${appointment.getTitle()}"></td>
+                        <td th:text="${appointment.getDescription()}"></td>
 
                         <td th:text="${#dates.format(prettyDate, #messages.msg('date.format'))}"></td>
                         <td th:text="${#dates.format(prettyStartTime, #messages.msg('time.format'))}"></td>
 
                         <td th:if="${prettyEndTime != null}" th:text="${#dates.format(prettyEndTime, #messages.msg('time.format'))}"> - </td>
 
-                        <td th:text="${{items.getAppointmentType()}}"></td>
+                        <td th:text="${{appointment.getAppointmentType()}}"></td>
+                            <!--<form action="#" th:action="@{/appointments/delete}" th:object="${appointment}" method="post">-->
+                                <!--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
+                                <!--<input type="hidden" th:field="${appointment}"/>-->
+                                <!--<button type="submit" name="delete" class="btn btn-primary" th:text="#{form.button.appointments.delete}"></button>-->
+                            <!--</form>-->
                         </div>
-                        <form action="#" th:action="@{/appointments/delete}" th:object="${appointment}" method="post">
-                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                            <button type="submit" name="delete" class="btn btn-primary" th:text="#{form.button.appointments.delete}"></button>
-                        </form>
+
                     </tr>
 
                     </tbody>
@@ -80,7 +82,7 @@
 
                             <!--//Need to give an option of all day-->
                             <label for="startTime" th:text="#{form.appointments.startTime}"></label>
-                            <input id="startTime" type="text" th:field="*{startTime}" placeholder="10:00" required="required"  th:title="#{form.error.startTime}"/>
+                            <input id="startTime" type="number" th:field="*{startTime}" placeholder="10:00" required="required"  th:title="#{form.error.startTime}"/>
                             <p th:if="${#fields.hasErrors('startTime')}" th:errors="*{startTime}" th:errorclass="formError"></p>
 
                             <label for="endTime" th:text="#{form.appointments.duration}"></label>
