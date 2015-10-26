@@ -2,10 +2,12 @@
 <head>
     <meta charset="utf-8"/>
     <title>Naked Java Appointments</title>
+    <link rel="stylesheet" th:href="@{/assets/css/qtip2-2-1.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/bootstrap.css}" />
     <link rel="stylesheet" th:href="@{/assets/css/jquery-ui.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/timePicker.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/app.css}" />
+
 
 </head>
 <body>
@@ -24,6 +26,8 @@
                         <th>Start Time</th>
                         <th>End Time</th>
                         <th>Type</th>
+                        <th>Options</th>
+
                     </tr>
                     </thead>
                     <tbody>
@@ -46,20 +50,26 @@
 
                         <td th:text="${{appointment.getAppointmentType()}}"></td>
                         <td>
-                            <div class="ellipsisContainer">
-                                <button th:id='data-ellipsisBtn- + ${appId}' th:type="button" th:name="ellipsis" th:class="ellipsisBtn">...</button>
-                                <div th:id='data-ellipsisOptions- + ${appId}' class="ellipsisOptions">
-                                    <span>I should be hidden...</span>
-                                </div>
+                            <div id="emailReminderFormContainer">
+                                <form action="#" th:action="@{/appointments/emailReminder}" th:object="${appointment}" method="post" th:class="inlineForm">
+                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                    <label for="email" th:text="#{form.appointments.emailAddress}"></label>
+                                    <input id="email" type="email"  placeholder="email" required="required" th:title="#{form.error.email}"/>
+                                    <button  th:id='data-ellipsisBtn- + ${appId}'  th:type="submit" th:name="emailReminder" class="emailBtn" ></button>
+                                </form>
                             </div>
-                            <!--<form action="#" th:action="@{/appointments/delete}" th:object="${appointment}" method="post" th:class="inlineForm">-->
-                            <!--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
-                            <!--<input type="hidden" th:field="${appointment}"/>-->
-                            <!--<button type="submit" name="delete" class="btn btn-primary" th:text="#{form.button.appointments.delete}"></button>-->
-                            <!--</form>-->
 
+                            <div id="deleteFormContainer">
+                                <form action="#" th:action="@{/appointments/delete}" th:object="${appointment}" method="post" th:class="inlineForm">
+                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                    <input type="hidden" th:field="${appointment}"/>
+                                    <button th:id='data-ellipsisBtn- + ${appId}' th:type="submit" th:name="delete" th:class="deleteBtn"></button>
+                                </form>
+                            </div>
                         </td>
+                            <!--End div for TH variables.-->
                         </div>
+
 
                     </tr>
 
@@ -113,6 +123,10 @@
                                 <!--<option  th:value="${240}" th:text="${'3hr'}"></option>-->
                             <!--</select>-->
 
+                            <!--Add a reoccurs for every day, week, month, year. removes the need to edit-->
+                            <!--delete also needs to consider to ask whether all future events should be removed.-->
+                            <!--change in structure needed if repeating events can be deleted from an original, list of some kind.-->
+
                             <label for="appointmentType" th:text="#{form.appointments.appointmentType}"></label>
                             <p th:if="${#fields.hasErrors('appointmentType')}" th:errors="*{appointmentType}" th:errorclass="formError"></p>
 
@@ -132,31 +146,51 @@
 </body>
 
 <script src="/assets/JS/jquery-1.10.2.js"></script>
+<script src="/assets/JS/qtip2.2.1.js"></script>
 <script src="/assets/JS/jquery-ui.js"></script>
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.4.5/i18n/jquery-ui-timepicker-addon-i18n.min.js"></script>-->
 <script src="/assets/JS/timePicker.js"></script>
 <script>
     //<![CDATA[
 
+
+
     //Hide the additional features div
     $(document).ready(function () {
-
         //iterate through all the divs - get their ids, hide them, then call the on click
-        $(".ellipsisContainer").each(function () {
+        $(".optionsContainer").each(function () {
             var $context = $(this);
-            var $button = $context.find(".ellipsisBtn");
+            var $span = $context.find(".ellipsisBtn");
             //            $currentId = $button.attr('id');
-            var $divOptions = $context.find('div').last();
+            var $divOptions = $context.find('div');
             $divOptions.hide();
 
-            //$($divOptions).hide();
-            $($button).on('click', function (event) {
-                $($divOptions).toggle();
+            $($span).on('click', function (event) {
+                $($divOptions).fadeToggle("slow");
             });
+
+            $span.qtip({
+                content: {
+                    text: 'A great way to show a persistent tooltip with an easy close method',
+                    title: {
+                        text: 'Combined title and button',
+                        button: true
+                    }
+                },
+                hide: {
+                    event: 'click'
+                }
+            });
+
+            //instead of show, as per above, we'll use a qtip as it'll make more
+            //a nicer experience.
+//            $($span).on('click', function (event) {
+//                $($divOptions).qtip({
+//                    text : $(this).next('werwerewr')
+//                });
+//            });
+
         });
     });
-
-
 
     $(document).ready(function() {
         $( "#theDate" ).datepicker({
@@ -210,10 +244,6 @@
         this._notifyChange(inst);
         this._adjustDate(target);
     };
-
-
-
-
     //]]>
 </script>
 </html>

@@ -33,3 +33,17 @@
     background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
     text-decoration: none;
 }
+
+.deleteBtn {
+    background-image: url("../img/trash.jpeg");
+    width: 30px ;
+    height: 30px;
+    background-size: contain;
+}
+
+.emailBtn {
+    background-image: url("../img/email.png");
+    width: 30px ;
+    height: 30px;
+    background-size: contain;
+}
