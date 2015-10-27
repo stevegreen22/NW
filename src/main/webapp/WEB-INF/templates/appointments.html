@@ -50,21 +50,20 @@
 
                         <td th:text="${{appointment.getAppointmentType()}}"></td>
                         <td>
-                            <div id="emailReminderFormContainer">
-                                <form action="#" th:action="@{/appointments/emailReminder}" th:object="${appointment}" method="post" th:class="inlineForm">
-                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                    <label for="email" th:text="#{form.appointments.emailAddress}"></label>
-                                    <input id="email" type="email"  placeholder="email" required="required" th:title="#{form.error.email}"/>
-                                    <button  th:id='data-ellipsisBtn- + ${appId}'  th:type="submit" th:name="emailReminder" class="emailBtn" ></button>
-                                </form>
-                            </div>
+                            <div>
+                                <div id="emailReminderFormContainer" style="display: inline !important;">
+                                    <form action="#" th:action="@{/appointments/emailReminder}" th:object="${appointment}" method="post" th:class="inlineForm">
+                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                        <button  th:id='data-ellipsisBtn- + ${appId}'  th:type="submit" th:name="emailReminder" class="emailBtn" ></button>
+                                    </form>
+                                </div>
 
-                            <div id="deleteFormContainer">
-                                <form action="#" th:action="@{/appointments/delete}" th:object="${appointment}" method="post" th:class="inlineForm">
-                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                    <input type="hidden" th:field="${appointment}"/>
-                                    <button th:id='data-ellipsisBtn- + ${appId}' th:type="submit" th:name="delete" th:class="deleteBtn"></button>
-                                </form>
+                                <div id="deleteFormContainer" style="display: inline !important;">
+                                    <form action="#" th:action="@{/appointments/delete}" th:object="${appointment}" method="post" th:class="inlineForm">
+                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                        <button th:id='data-ellipsisBtn- + ${appId}' th:type="submit" th:name="delete" th:class="deleteBtn"></button>
+                                    </form>
+                                </div>
                             </div>
                         </td>
                             <!--End div for TH variables.-->
