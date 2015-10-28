@@ -1,7 +1,7 @@
 package com.dao;
 
-import com.nakedwines.model.Appointment;
-import com.nakedwines.model.AppointmentType;
+import com.simpleSchedule.model.Appointment;
+import com.simpleSchedule.model.AppointmentType;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +13,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import java.sql.Time;
 import java.util.Calendar;
-import java.util.Date;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"/spring/config.xml"})

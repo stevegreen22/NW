@@ -1,5 +1,5 @@
-import com.nakedwines.dao.AppointmentDaoImpl;
-import com.nakedwines.model.Appointment;
+import com.simpleSchedule.dao.AppointmentDaoImpl;
+import com.simpleSchedule.model.Appointment;
 
 import java.util.List;
 

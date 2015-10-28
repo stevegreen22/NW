@@ -5,7 +5,7 @@
     <persistence-unit name="entityManager">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <!-- Annotated entity classes -->
-        <class>com.nakedwines.model.Appointment</class>
+        <class>com.simpleSchedule.model.Appointment</class>
         <properties>
 
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL82Dialect" />
@@ -42,4 +42,11 @@
         <!--create table appointments(appId serial primary key, title varchar(60),description varchar(200),theDate Date,startTime Time,endTime Time,appointmentType varchar(20));-->
 
 
-<!--create table users ( userid serial primary key, username varchar(60), email varchar(256), simplePassword varchar(30));-->
+<!--create table users ( userid serial primary key,
+                        firstname varchar(40),
+                        lastname varchar(40),
+                        username varchar(60),
+                        email varchar(256),
+                        password varchar(30));-->
+
+

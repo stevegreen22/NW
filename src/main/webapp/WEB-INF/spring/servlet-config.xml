@@ -46,7 +46,7 @@
 
 
     <!--double asterisk allows for recursive search - load all under the pacakge-->
-    <context:component-scan base-package="com.nakedwines"/>
+    <context:component-scan base-package="com.simpleSchedule"/>
 
 
 
@@ -63,7 +63,7 @@
 
     <!--validation-->
     <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
-    <bean id="appointmentValidator" class="com.nakedwines.validator.AppointmentValidator" />
+    <bean id="appointmentValidator" class="com.simpleSchedule.validator.AppointmentValidator" />
 
     <bean class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="0"/>
 
@@ -76,7 +76,7 @@
           <!--class="org.springframework.format.support.FormattingConversionServiceFactoryBean">-->
         <!--<property name="formatters">-->
             <!--<set>-->
-                <!--<bean class="com.nakedwines.formatter.DateFormatter" />-->
+                <!--<bean class="com.simpleScheduledule.formatter.DateFormatter" />-->
             <!--</set>-->
         <!--</property>-->
     <!--</bean>-->
@@ -90,7 +90,7 @@
     </bean>
 
 
-    <bean id="appointment" class="com.nakedwines.model.Appointment">
+    <bean id="appointment" class="com.simpleSchedule.model.Appointment">
         <property name="theDate">
             <bean factory-bean="dateFormat" factory-method="parse">
                 <constructor-arg value="22/05/1983" />
