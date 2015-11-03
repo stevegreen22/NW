@@ -129,7 +129,7 @@
                             <p th:if="${#fields.hasErrors('appointmentType')}" th:errors="*{appointmentType}" th:errorclass="formError"></p>
 
                             <select name="appointmentType" id="appointmentType">
-                                <option th:each="appointmentType : ${T(com.nakedwines.model.AppointmentType).values()}" th:value="${appointmentType}" th:text="#{__${appointmentType.displayName}__}" th:selected="${appointmentType == T(com.nakedwines.model.AppointmentType).MEETING}"></option>
+                                <option th:each="appointmentType : ${T(com.simpleSchedule.model.AppointmentType).values()}" th:value="${appointmentType}" th:text="#{__${appointmentType.displayName}__}" th:selected="${appointmentType == T(com.simpleSchedule.model.AppointmentType).MEETING}"></option>
                             </select>
 
                             <button type="submit" name="create" class="btn btn-primary" th:text="#{form.button.appointments.save}"></button>

@@ -18,4 +18,8 @@
        http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
        http://www.springframework.org/schema/task
        http://www.springframework.org/schema/task/spring-task-4.1.xsd">
+
+<!--properties-->
+    <context:property-placeholder location="classpath:application.properties"/>
+
 </beans>
