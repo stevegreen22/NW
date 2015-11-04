@@ -14,66 +14,24 @@ import java.util.Set;
 public class MyUserDetails extends SocialUser {
 
     private Long id;
+
     private String firstName;
+
     private String lastName;
+
     private Role role;
+
     private SocialMediaService socialSignInProvider;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    public SocialMediaService getSocialSignInProvider() {
-        return socialSignInProvider;
-    }
-
-    public void setSocialSignInProvider(SocialMediaService socialSignInProvider) {
-        this.socialSignInProvider = socialSignInProvider;
-    }
-
-    public MyUserDetails(String username,
-                         String password,
-                         boolean enabled,
-                         boolean accountNonExpired,
-                         boolean credentialsNonExpired,
-                         boolean accountNonLocked,
-                         Collection<? extends GrantedAuthority> authorities) {
-        super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
-    }
-
-    public MyUserDetails(String username,
-                         String password,
-                         Collection<? extends GrantedAuthority> authorities) {
+    public MyUserDetails(String username, String password, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
     }
+
+    public static Builder getBuilder() {
+        return new Builder();
+    }
+
+    //Getters are omitted for the sake of clarity.
 
     public static class Builder {
 
@@ -86,8 +44,40 @@ public class MyUserDetails extends SocialUser {
         private SocialMediaService socialSignInProvider;
         private Set<GrantedAuthority> authorities;
 
+        public Set<GrantedAuthority> getAuthorities() {
+            return authorities;
+        }
+
+        public String getFirstName() {
+            return firstName;
+        }
+
+        public Long getId() {
+            return id;
+        }
+
+        public String getLastName() {
+            return lastName;
+        }
+
+        public String getPassword() {
+            return password;
+        }
+
+        public Role getRole() {
+            return role;
+        }
+
+        public SocialMediaService getSocialSignInProvider() {
+            return socialSignInProvider;
+        }
+
+        public String getUsername() {
+            return username;
+        }
+
         public Builder() {
-            this.authorities = new HashSet<GrantedAuthority>();
+            this.authorities = new HashSet<>();
         }
 
         public Builder firstName(String firstName) {
@@ -144,7 +134,5 @@ public class MyUserDetails extends SocialUser {
 
             return user;
         }
-
-
     }
 }

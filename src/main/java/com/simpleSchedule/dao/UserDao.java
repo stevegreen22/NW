@@ -12,4 +12,5 @@ public interface UserDao {
     List<User> getListOfUsers();
     User getUserByUserId(Integer userId);
     void persistUser(User user);
+    User findByEmail(String email);
 }

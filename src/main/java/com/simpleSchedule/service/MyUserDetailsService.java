@@ -11,12 +11,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 /**
  * Created by SteveGreen on 03/11/2015.
  */
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class MyUserDetailsService implements UserDetailsService {
 
     private UserDao userDao;
 
+    public MyUserDetailsService() {}
+
     @Autowired
-    public UserDetailsServiceImpl(UserDao userDao) {
+    public MyUserDetailsService(UserDao userDao) {
         this.userDao = userDao;
     }
 
@@ -29,12 +31,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("No user found with username: " + username);
         }
 
-        MyUserDetails myUserDetails = new MyUserDetails.Builder()
+        MyUserDetails myUserDetails = MyUserDetails.getBuilder()
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .password(user.getPassword())
-                .role(user.getRole)
-                .socialSignInProvider(user.getSignInProvider)
+                .role(user.getRole())
+                .socialSignInProvider(user.getSignInProvider())
                 .username(user.getEmail())
                 .build();
 

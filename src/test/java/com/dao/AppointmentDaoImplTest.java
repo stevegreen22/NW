@@ -15,7 +15,7 @@ import java.sql.Time;
 import java.util.Calendar;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"/spring/config.xml"})
+@ContextConfiguration(locations = {"/spring/ApplicationContext.xml"})
 
 public class AppointmentDaoImplTest {
 

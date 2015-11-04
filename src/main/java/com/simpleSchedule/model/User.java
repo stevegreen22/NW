@@ -23,7 +23,7 @@ public class User implements Serializable{
     private static final long serialVersionUID = 135498375435098L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //set to identity for postgres serial
     private Long id;
 
     @NotNull
@@ -66,6 +66,14 @@ public class User implements Serializable{
     @Enumerated(EnumType.STRING)
     @Column(name = "role", length = 20, nullable = false)
     private Role role;
+
+    public Role getRole() {
+        return role;
+    }
+
+    public SocialMediaService getSignInProvider() {
+        return signInProvider;
+    }
 
     @Enumerated(EnumType.STRING)
     @Column(name = "sign_in_provider", length = 20)

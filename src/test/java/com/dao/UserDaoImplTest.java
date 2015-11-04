@@ -12,7 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"/spring/config.xml"})
+@ContextConfiguration(locations = {"/spring/ApplicationContext.xml"})
 
 public class UserDaoImplTest {
 

@@ -33,4 +33,9 @@ public class UserDaoImpl implements UserDao {
     public void persistUser(User user) {
         em.persist(user);
     }
+
+    @Override
+    public User findByEmail(String email) {
+        return null;
+    }
 }
